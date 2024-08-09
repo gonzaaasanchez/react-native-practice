@@ -1,5 +1,6 @@
 import { View, StyleSheet, Alert } from 'react-native';
 import { useState, useEffect } from 'react';
+import { Ionicons } from '@expo/vector-icons';
 import Title from '../components/ui/Title';
 import Colors from '../constants/Colors';
 import NumberContainer from '../components/game/NumberContainer';
@@ -25,11 +26,7 @@ let minBoundary = 1;
 let maxBoundary = 100;
 
 function GameScreen(props: { userNumber: number; onGameOver: () => void }) {
-  const initialGuess = generateRandomBetween(
-    1,
-    100,
-    props.userNumber
-  );
+  const initialGuess = generateRandomBetween(1, 100, props.userNumber);
   const [currentGuess, setCurrentGuess] = useState<number>(initialGuess);
   useEffect(() => {
     if (currentGuess === props.userNumber) {
@@ -65,14 +62,28 @@ function GameScreen(props: { userNumber: number; onGameOver: () => void }) {
       <Title> Oponent's Guess</Title>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card>
-        <InstructionText>Higher or lower?</InstructionText>
-        <View>
-          <PrimaryButton onPressed={() => nextGuessHandler('lower')}>
-            -
-          </PrimaryButton>
-          <PrimaryButton onPressed={() => nextGuessHandler('greater')}>
-            +
-          </PrimaryButton>
+        <InstructionText style={styles.instructionText}>
+          Higher or lower?
+        </InstructionText>
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPressed={() => nextGuessHandler('lower')}>
+              <Ionicons
+                name="remove"
+                size={24}
+                color="white"
+              />
+            </PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPressed={() => nextGuessHandler('greater')}>
+              <Ionicons
+                name="add"
+                size={24}
+                color="white"
+              />
+            </PrimaryButton>
+          </View>
         </View>
       </Card>
       <View></View>
@@ -94,5 +105,14 @@ const styles = StyleSheet.create({
     padding: 12,
     borderColor: Colors.accent500,
     borderWidth: 2,
+  },
+  instructionText: {
+    marginBottom: 12,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+  },
+  buttonContainer: {
+    flex: 1,
   },
 });

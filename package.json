@@ -10,15 +10,17 @@
   },
   "dependencies": {
     "expo": "~51.0.0",
+    "expo-app-loading": "^2.1.1",
+    "expo-font": "~12.0.9",
+    "expo-linear-gradient": "~13.0.2",
     "expo-status-bar": "~1.12.0",
     "react": "18.2.0",
-    "react-native": "0.74.3",
-    "expo-linear-gradient": "~13.0.2"
+    "react-native": "0.74.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
-    "typescript": "~5.3.3",
-    "@types/react": "~18.2.79"
+    "@types/react": "~18.2.79",
+    "typescript": "~5.3.3"
   },
   "private": true
 }
