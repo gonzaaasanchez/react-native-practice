@@ -1,4 +1,4 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Pressable, StyleSheet, Dimensions } from 'react-native';
 import Colors from '../../constants/Colors';
 
 function PrimaryButton(props: {
@@ -23,6 +23,8 @@ function PrimaryButton(props: {
 
 export default PrimaryButton;
 
+const deviceWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   buttonOuterContainer: {
     borderRadius: 28,
@@ -31,8 +33,8 @@ const styles = StyleSheet.create({
   },
   buttonInnercontainer: {
     backgroundColor: Colors.primary500,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingVertical: deviceWidth < 380 ? 4 : 8,
+    paddingHorizontal: deviceWidth < 380 ? 8 : 16,
     elevation: 2,
   },
   buttonText: {
