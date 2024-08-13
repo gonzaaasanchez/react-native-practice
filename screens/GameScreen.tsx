@@ -26,7 +26,7 @@ function generateRandomBetween(
 let minBoundary = 1;
 let maxBoundary = 100;
 
-function GameScreen(props: { userNumber: number; onGameOver: () => void }) {
+function GameScreen(props: { userNumber: number; onGameOver: (rounders: number) => void }) {
   const initialGuess = generateRandomBetween(1, 100, props.userNumber);
   const [currentGuess, setCurrentGuess] = useState<number>(initialGuess);
   const [guessRounds, setGuessRounds] = useState<number[]>([initialGuess]);
@@ -34,7 +34,7 @@ function GameScreen(props: { userNumber: number; onGameOver: () => void }) {
 
   useEffect(() => {
     if (currentGuess === props.userNumber) {
-      props.onGameOver();
+      props.onGameOver(guessRounds.length);
     }
   }, [currentGuess, props.userNumber, props.onGameOver]);
 
