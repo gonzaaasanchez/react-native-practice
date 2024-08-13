@@ -1,10 +1,16 @@
 import { View, Text, StyleSheet } from 'react-native';
 import Colors from '../../constants/Colors';
-function GuessLogItem(props: { roundNumber: number; guess: number }) {
+
+type GuessLogItemProps = {
+  roundedNumber: number;
+  guess: number;
+};
+
+const GuessLogItem: React.FC<GuessLogItemProps> = ({ roundedNumber, guess }) => {
   return (
     <View style={styles.listItem}>
-      <Text style={styles.itemText}>#{props.roundNumber}</Text>
-      <Text style={styles.itemText}>Oponent's guess: {props.guess}</Text>
+      <Text style={styles.itemText}>#{roundedNumber}</Text>
+      <Text style={styles.itemText}>Oponent's guess: {guess}</Text>
     </View>
   );
 }

@@ -10,11 +10,17 @@ import Title from '../components/ui/Title';
 import Colors from '../constants/Colors';
 import PrimaryButton from '../components/ui/PrimaryButton';
 
-function GameOverScreen(props: {
+interface GameOverScreenProps {
   roundsNumber: number;
   userNumber: number;
   onStartNewGame: () => void;
-}) {
+}
+
+const GameOverScreen: React.FC<GameOverScreenProps> = ({
+  roundsNumber,
+  userNumber,
+  onStartNewGame,
+}) => {
   const { width, height } = useWindowDimensions();
   let imageSize = 300;
   if (width < 380) {
@@ -43,18 +49,18 @@ function GameOverScreen(props: {
         <View>
           <Text style={styles.summaryText}>
             Your phone needed{' '}
-            <Text style={styles.hightlightText}>{props.roundsNumber}</Text>{' '}
+            <Text style={styles.hightlightText}>{roundsNumber}</Text>{' '}
             rounds to guess the number{' '}
-            <Text style={styles.hightlightText}>{props.userNumber}</Text>
+            <Text style={styles.hightlightText}>{userNumber}</Text>
           </Text>
-          <PrimaryButton onPressed={props.onStartNewGame}>
+          <PrimaryButton onPressed={onStartNewGame}>
             Start New Game
           </PrimaryButton>
         </View>
       </View>
     </ScrollView>
   );
-}
+};
 
 export default GameOverScreen;
 

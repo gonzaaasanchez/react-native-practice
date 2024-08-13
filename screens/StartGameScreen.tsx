@@ -14,12 +14,14 @@ import Title from '../components/ui/Title';
 import Card from '../components/ui/Card';
 import InstructionText from '../components/ui/InstructionText';
 
-function StartGameScreen(props: {
+interface StartGameScreenProps {
   onPickNumber: (chosenNumber: number) => void;
-}) {
+}
+
+const StartGameScreen: React.FC<StartGameScreenProps> = ({ onPickNumber }) => {
   const [enteredNumber, setEnteredNumber] = useState<string>('');
 
-  const { width, height } = useWindowDimensions();
+  const { height } = useWindowDimensions();
 
   function resetInputHandler() {
     setEnteredNumber('');
@@ -39,7 +41,7 @@ function StartGameScreen(props: {
       );
       return;
     }
-    props.onPickNumber(chosenNumber);
+    onPickNumber(chosenNumberr);
   }
 
   const marginTopDistance = height < 500 ? 30 : 100;
@@ -79,7 +81,7 @@ function StartGameScreen(props: {
       </KeyboardAvoidingView>
     </ScrollView>
   );
-}
+};
 
 export default StartGameScreen;
 

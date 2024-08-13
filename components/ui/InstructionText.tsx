@@ -7,14 +7,17 @@ import {
 } from 'react-native';
 import Colors from '../../constants/Colors';
 
-function InstructionText(props: {
+interface InstructionTextProps {
   children: React.ReactNode;
   style?: StyleProp<TextStyle>;
-}) {
-  return (
-    <Text style={[styles.instructionText, props.style]}>{props.children}</Text>
-  );
 }
+
+const InstructionText: React.FC<InstructionTextProps> = ({
+  children,
+  style,
+}) => {
+  return <Text style={[styles.instructionText, style]}>{children}</Text>;
+};
 
 export default InstructionText;
 

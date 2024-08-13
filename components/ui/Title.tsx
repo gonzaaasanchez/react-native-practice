@@ -1,8 +1,12 @@
 import { StyleSheet, Text, Platform } from 'react-native';
 
-function Title(props: { children: string }) {
-  return <Text style={styles.title}> {props.children}</Text>;
+interface TitleProps {
+  children: React.ReactNode;
 }
+
+const Title: React.FC<TitleProps> = ({ children }) => {
+  return <Text style={styles.title}> {children}</Text>;
+};
 
 export default Title;
 

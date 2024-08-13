@@ -1,9 +1,14 @@
 import { View, StyleSheet, Dimensions } from 'react-native';
 import Colors from '../../constants/Colors';
 
-function Card(props: { children: React.ReactNode }) {
-  return <View style={styles.inputContainer}>{props.children}</View>;
+interface CardProps {
+  children: React.ReactNode;
 }
+
+const Card: React.FC<CardProps> = ({ children }) => {
+  return <View style={styles.inputContainer}>{children}</View>;
+};
+
 export default Card;
 
 const deviceWidth = Dimensions.get('window').width;

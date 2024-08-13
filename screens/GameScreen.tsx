@@ -15,6 +15,11 @@ import Card from '../components/ui/Card';
 import InstructionText from '../components/ui/InstructionText';
 import GuessLogItem from '../components/game/GuessLogItem';
 
+interface GameScreenProps {
+  userNumber: number;
+  onGameOver: (guessRounds: number) => void;
+}
+
 function generateRandomBetween(
   min: number,
   max: number,
@@ -32,21 +37,18 @@ function generateRandomBetween(
 let minBoundary = 1;
 let maxBoundary = 100;
 
-function GameScreen(props: {
-  userNumber: number;
-  onGameOver: (rounders: number) => void;
-}) {
-  const initialGuess = generateRandomBetween(1, 100, props.userNumber);
+const GameScreen: React.FC<GameScreenProps> = ({ userNumber, onGameOver }) => {
+  const initialGuess = generateRandomBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState<number>(initialGuess);
   const [guessRounds, setGuessRounds] = useState<number[]>([initialGuess]);
   const guessRoundsListLenght = guessRounds.length;
   const { width, height } = useWindowDimensions();
 
   useEffect(() => {
-    if (currentGuess === props.userNumber) {
-      props.onGameOver(guessRounds.length);
+    if (currentGuess === userNumber) {
+      onGameOver(guessRounds.length);
     }
-  }, [currentGuess, props.userNumber, props.onGameOver]);
+  }, [currentGuess, userNumber, onGameOver]);
 
   useEffect(() => {
     minBoundary = 1;
@@ -56,8 +58,8 @@ function GameScreen(props: {
 
   function nextGuessHandler(direction: string) {
     if (
-      (direction === 'lower' && currentGuess < props.userNumber) ||
-      (direction === 'greater' && currentGuess > props.userNumber)
+      (direction === 'lower' && currentGuess < userNumber) ||
+      (direction === 'greater' && currentGuess > userNumber)
     ) {
       Alert.alert('Lier!', 'This is wrong..', [
         { text: 'Sorry!', style: 'cancel' },
@@ -145,7 +147,7 @@ function GameScreen(props: {
           data={guessRounds}
           renderItem={(itemData) => (
             <GuessLogItem
-              roundNumber={guessRoundsListLenght - itemData.index}
+              roundedNumber={guessRoundsListLenght - itemData.index}
               guess={itemData.item}
             />
           )}
@@ -154,7 +156,7 @@ function GameScreen(props: {
       </View>
     </View>
   );
-}
+};
 export default GameScreen;
 
 const styles = StyleSheet.create({
