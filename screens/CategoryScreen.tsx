@@ -11,7 +11,9 @@ type CategoriesScreenProps = {
 const CategoriesScreen: React.FC<CategoriesScreenProps> = ({ navigation }) => {
   const categoryItem: ListRenderItem<Category> = ({ item }) => {
     function onPressedHandler() {
-      navigation.navigate('MealDetailScreen');
+      navigation.navigate('MealDetailScreen', {
+        categoryId: item.id,
+      });
     }
 
     return (
