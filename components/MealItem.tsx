@@ -17,7 +17,9 @@ const MealItem: React.FC<MealItemProps> = ({ item }) => {
     <View style={styles.mealItem}>
       <Pressable
         android_ripple={{ color: '#ccc' }}
-        style={styles.buttonPressed}>
+        style={({ pressed }) => [
+          pressed ? styles.buttonPressed : null,
+        ]}>
         <View style={styles.innerContainer}>
           <View>
             <Image
