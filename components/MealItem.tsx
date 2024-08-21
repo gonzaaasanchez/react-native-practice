@@ -6,20 +6,35 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../App';
 import Meal from '../models/meal';
+import MealDetails from './MealDetails';
 
 type MealItemProps = {
   item: Meal;
 };
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'MealDetailScreen'
+>;
 
 const MealItem: React.FC<MealItemProps> = ({ item }) => {
+  const navigation = useNavigation<NavigationProp>();
+
+  const handlePress = () => {
+    navigation.navigate('MealDetailScreen', {
+      mealId: item.id,
+    });
+  };
+
   return (
     <View style={styles.mealItem}>
       <Pressable
         android_ripple={{ color: '#ccc' }}
-        style={({ pressed }) => [
-          pressed ? styles.buttonPressed : null,
-        ]}>
+        onPress={handlePress}
+        style={({ pressed }) => [pressed ? styles.buttonPressed : null]}>
         <View style={styles.innerContainer}>
           <View>
             <Image
@@ -28,15 +43,7 @@ const MealItem: React.FC<MealItemProps> = ({ item }) => {
             />
             <Text style={styles.title}>{item.title}</Text>
           </View>
-          <View style={styles.details}>
-            <Text style={styles.detailItem}>{item.duration}m</Text>
-            <Text style={styles.detailItem}>
-              {item.complexity.toUpperCase()}
-            </Text>
-            <Text style={styles.detailItem}>
-              {item.affordability.toUpperCase()}
-            </Text>
-          </View>
+          <MealDetails item={item} />
         </View>
       </Pressable>
     </View>
@@ -70,16 +77,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     margin: 8,
-  },
-  details: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 8,
-  },
-  detailItem: {
-    marginHorizontal: 4,
-    fontSize: 12,
   },
   buttonPressed: {
     opacity: 0.5,

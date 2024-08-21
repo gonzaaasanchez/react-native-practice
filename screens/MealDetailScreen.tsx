@@ -1,53 +1,67 @@
-import { useLayoutEffect } from 'react';
-import { View, FlatList, StyleSheet, ListRenderItem } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { MEALS, CATEGORIES } from '../data/dummy-data';
-import Meal from '../models/meal';
-import MealItem from '../components/MealItem';
 import { RootStackParamList } from '../App';
+import { MEALS } from '../data/dummy-data';
+import MealDetails from '../components/MealDetails';
+import Subtitle from '../components/MealDetail/Subtitle';
+import List from '../components/MealDetail/List';
 
 type MealDetailScreenProps = {
   route: RouteProp<RootStackParamList, 'MealDetailScreen'>;
   navigation: NativeStackNavigationProp<RootStackParamList, 'MealDetailScreen'>;
 };
 
-const MealDetailScreen: React.FC<MealDetailScreenProps> = ({
-  route,
-  navigation,
-}) => {
-  const categoryId = route.params.categoryId;
-  const displayedMeals = MEALS.filter((item) => {
-    return item.categoryIds.indexOf(categoryId) >= 0;
-  });
-
-  useLayoutEffect(() => {
-    const categoryTitle = CATEGORIES.find(
-      (category) => category.id === categoryId
-    )?.title;
-    navigation.setOptions({ title: categoryTitle });
-  }, [categoryId, navigation]);
-
-  const mealItem: ListRenderItem<Meal> = ({ item }) => {
-    return <MealItem item={item} />;
-  };
-
+const MealDetailScreen: React.FC<MealDetailScreenProps> = ({ route }) => {
+  const mealId = route.params.mealId;
+  const selectedMeal = MEALS.find((meal) => meal.id === mealId)!;
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={displayedMeals}
-        keyExtractor={(item) => item.id}
-        renderItem={mealItem}
+    <ScrollView style={styles.rootContainer}>
+      <Image
+        source={{ uri: selectedMeal?.imageUrl }}
+        style={styles.image}
       />
-    </View>
+      <Text style={styles.title}>{selectedMeal?.title}</Text>
+      <MealDetails
+        item={selectedMeal}
+        textStyle={styles.detailText}
+      />
+      <View style={styles.listOuterContainer}>
+        <View style={styles.listContainer}>
+          <Subtitle children={'Ingredients'} />
+          <List data={selectedMeal.ingredients} />
+          <Subtitle children={'Steps'} />
+          <List data={selectedMeal.steps} />
+        </View>
+      </View>
+    </ScrollView>
   );
 };
 
 export default MealDetailScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
+  rootContainer: {
+    marginBottom: 32,
+  },
+  image: {
+    width: '100%',
+    height: 350,
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 24,
+    margin: 8,
+    textAlign: 'center',
+    color: 'white',
+  },
+  detailText: {
+    color: 'white',
+  },
+  listOuterContainer: {
+    alignItems: 'center',
+  },
+  listContainer: {
+    width: '80%',
   },
 });

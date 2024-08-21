@@ -1,4 +1,4 @@
-import { View, FlatList, ListRenderItem } from 'react-native';
+import { FlatList, ListRenderItem } from 'react-native';
 import { CATEGORIES } from '../data/dummy-data';
 import Category from '../models/category';
 import CategoryGridTile from '../components/CategoryGridTile';
@@ -11,7 +11,7 @@ type CategoriesScreenProps = {
 const CategoriesScreen: React.FC<CategoriesScreenProps> = ({ navigation }) => {
   const categoryItem: ListRenderItem<Category> = ({ item }) => {
     function onPressedHandler() {
-      navigation.navigate('MealDetailScreen', {
+      navigation.navigate('CategoryDetailScreen', {
         categoryId: item.id,
       });
     }
