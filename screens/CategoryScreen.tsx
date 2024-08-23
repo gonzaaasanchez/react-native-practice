@@ -10,11 +10,11 @@ type CategoriesScreenProps = {
 
 const CategoriesScreen: React.FC<CategoriesScreenProps> = ({ navigation }) => {
   const categoryItem: ListRenderItem<Category> = ({ item }) => {
-    function onPressedHandler() {
+    const onPressedHandler = () => {
       navigation.navigate('CategoryDetailScreen', {
         categoryId: item.id,
       });
-    }
+    };
 
     return (
       <CategoryGridTile
