@@ -1,15 +1,16 @@
 import { useLayoutEffect } from 'react';
-import { View, FlatList, StyleSheet, ListRenderItem } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { MEALS, CATEGORIES } from '../data/dummy-data';
-import Meal from '../models/meal';
-import MealItem from '../components/MealItem';
 import { RootStackParamList } from '../App';
+import MealList from '../components/MealList/MealList';
 
 type CategoryDetailScreenProps = {
   route: RouteProp<RootStackParamList, 'CategoryDetailScreen'>;
-  navigation: NativeStackNavigationProp<RootStackParamList, 'CategoryDetailScreen'>;
+  navigation: NativeStackNavigationProp<
+    RootStackParamList,
+    'CategoryDetailScreen'
+  >;
 };
 
 const CategoryDetailScreen: React.FC<CategoryDetailScreenProps> = ({
@@ -28,26 +29,7 @@ const CategoryDetailScreen: React.FC<CategoryDetailScreenProps> = ({
     navigation.setOptions({ title: categoryTitle });
   }, [categoryId, navigation]);
 
-  const mealItem: ListRenderItem<Meal> = ({ item }) => {
-    return <MealItem item={item} />;
-  };
-
-  return (
-    <View style={styles.container}>
-      <FlatList
-        data={displayedMeals}
-        keyExtractor={(item) => item.id}
-        renderItem={mealItem}
-      />
-    </View>
-  );
+  return <MealList items={displayedMeals} />;
 };
 
 export default CategoryDetailScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});
